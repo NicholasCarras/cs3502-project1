@@ -1,0 +1,28 @@
+========================================
+Phase 4: Deadlock-Free Database Updates
+========================================
+
+Initial Record 1 value: 100
+Initial Record 2 value: 100
+
+All workers lock records in ascending order.
+
+Worker 1 started with pthread ID 123466424514240
+Worker 1 attempting to lock Record 1
+Worker 1 locked Record 1
+Worker 2 started with pthread ID 123466416121536
+Worker 2 attempting to lock Record 1
+Worker 1 attempting to lock Record 2
+Worker 1 locked Record 2
+Worker 1 transferred 10 from Record 1 to Record 2
+Worker 1 completed its transaction
+Worker 2 locked Record 1
+Worker 2 attempting to lock Record 2
+Worker 2 locked Record 2
+Worker 2 transferred 20 from Record 2 to Record 1
+Worker 2 completed its transaction
+
+Final Record 1 value: 110
+Final Record 2 value: 90
+Final total value: 200
+Result: DEADLOCK PREVENTED AND VALUES CORRECT
