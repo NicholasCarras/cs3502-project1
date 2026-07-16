@@ -1,0 +1,51 @@
+========================================
+Phase 1: Unsynchronized Database Updates
+========================================
+
+Workers: 4
+Updates per worker: 10000
+Database records: 2
+
+Worker 1 started with pthread ID 124678693713600
+Worker 2 started with pthread ID 124678685320896
+Worker 3 started with pthread ID 124678676928192
+Worker 2: Record 1 changed from 0 to 1
+Worker 2: Record 2 changed from 0 to 1
+Worker 2: Record 1 changed from 1 to 2
+Worker 1: Record 1 changed from 0 to 1
+Worker 1: Record 2 changed from 12 to 13
+Worker 1: Record 1 changed from 1 to 2
+Worker 3: Record 1 changed from 0 to 1
+Worker 3: Record 2 changed from 24 to 25
+Worker 3: Record 1 changed from 1 to 2
+Worker 4 started with pthread ID 124678668535488
+Worker 4: Record 1 changed from 37 to 38
+Worker 4: Record 2 changed from 61 to 62
+Worker 4: Record 1 changed from 38 to 39
+Worker 2 finished
+Worker 4 finished
+Worker 1 finished
+Worker 3 finished
+
+========================================
+Phase 1 Results
+========================================
+
+Record 1
+  Expected value:      20000
+  Actual value:        9250
+  Recorded updates:    19962
+  Result: RACE CONDITION DETECTED
+
+Record 2
+  Expected value:      20000
+  Actual value:        9361
+  Recorded updates:    19961
+  Result: RACE CONDITION DETECTED
+
+Expected total updates: 40000
+Actual total value:     18611
+Lost updates:           21389
+Execution time:         0.231211 seconds
+
+Race condition demonstrated successfully.
