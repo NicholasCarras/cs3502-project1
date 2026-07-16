@@ -1,0 +1,51 @@
+=====================================
+Phase 2: Synchronized Database Updates
+=====================================
+
+Workers: 4
+Updates per worker: 10000
+Database records: 2
+
+Worker 1 started with pthread ID 136988120315584
+Worker 2 started with pthread ID 136988111922880
+Worker 3 started with pthread ID 136988103530176
+Worker 1: Record 1 changed from 0 to 1
+Worker 1: Record 2 changed from 0 to 1
+Worker 4 started with pthread ID 136988095137472
+Worker 2: Record 1 changed from 1 to 2
+Worker 2: Record 2 changed from 1 to 2
+Worker 2: Record 1 changed from 2 to 3
+Worker 3: Record 1 changed from 139 to 140
+Worker 3: Record 2 changed from 139 to 140
+Worker 3: Record 1 changed from 140 to 141
+Worker 1: Record 1 changed from 177 to 178
+Worker 4: Record 1 changed from 178 to 179
+Worker 4: Record 2 changed from 178 to 179
+Worker 4: Record 1 changed from 179 to 180
+Worker 3 finished
+Worker 2 finished
+Worker 4 finished
+Worker 1 finished
+
+=====================================
+Phase 2 Results
+=====================================
+
+Record 1
+  Expected value:      20000
+  Actual value:        20000
+  Recorded updates:    20000
+  Result: CORRECT
+
+Record 2
+  Expected value:      20000
+  Actual value:        20000
+  Recorded updates:    20000
+  Result: CORRECT
+
+Expected total updates: 40000
+Actual total value:     40000
+Lost updates:           0
+Execution time:         2.732697 seconds
+
+Mutex synchronization worked successfully.
