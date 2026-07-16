@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{setspace}
+
+\title{CS 3502 Project 1 \\ Database Records}
+\author{Nicholas Carrasquilla}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+This program demonstrates basic multithreading concepts using a simple database record system. The project is divided into four phases. Each phase builds on the previous one by first demonstrating race conditions, then protecting shared resources with mutexes, creating a deadlock, and finally resolving the deadlock using ordered locking.
+
+\section{Phase 1}
+
+The first phase creates multiple worker threads that update shared database records without any synchronization. Since several threads can modify the same record at the same time, race conditions occur and the final values are often incorrect. Running the program multiple times produces different results because thread scheduling is unpredictable.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{phase1.png}
+\caption{Phase 1 program output}
+\end{figure}
+
+\section{Phase 2}
+
+In the second phase, a mutex is added to each database record. Before a worker updates a record, it locks the mutex and unlocks it after the update is complete. This prevents multiple threads from modifying the same record simultaneously. The final values remain correct every time the program is executed.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{phase2.png}
+\caption{Phase 2 program output}
+\end{figure}
+
+\section{Phase 3}
+
+The third phase demonstrates a deadlock. Two worker threads attempt to lock two different records in opposite order. Each thread successfully locks one record but waits forever for the second record, causing the program to stop making progress.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{phase3.png}
+\caption{Phase 3 program output}
+\end{figure}
+
+\section{Phase 4}
+
+The final phase prevents the deadlock by always locking the records in the same order. Since every thread follows the same locking order, the circular wait condition is removed and all transactions complete successfully.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{phase4.png}
+\caption{Phase 4 program output}
+\end{figure}
+
+\section{Challenges and Solutions}
+
+One challenge was making the race condition occur consistently enough to observe incorrect results. Small delays were added to increase thread interleaving. Another challenge was creating a reliable deadlock. This was solved by having two threads acquire locks in opposite order. The deadlock was then removed by changing both threads to acquire locks using the same order.
+
+\section{Performance Observations}
+
+The unsynchronized version executes slightly faster because no locking is required, but the results are unreliable. The synchronized version introduces a small amount of overhead due to mutex locking, but it consistently produces the correct results. The deadlock example shows how incorrect locking strategies can prevent progress, while the final phase demonstrates that ordered locking avoids deadlock without significantly affecting performance.
+
+\section{Conclusion}
+
+This project demonstrated several important multithreading concepts including race conditions, mutual exclusion, deadlock creation, and deadlock prevention. The final implementation successfully synchronized access to shared data and prevented deadlocks by using a consistent locking strategy.
+
+\end{document}
