@@ -1,0 +1,18 @@
+========================================
+Phase 3: Intentional Database Deadlock
+========================================
+
+Initial Record 1 value: 100
+Initial Record 2 value: 100
+
+Worker 1 will lock Record 1 and then Record 2
+Worker 2 will lock Record 2 and then Record 1
+
+Worker 2 started with pthread ID 125263581013696
+Worker 2 attempting to lock Record 2
+Worker 2 locked Record 2
+Worker 1 started with pthread ID 125263589406400
+Worker 1 attempting to lock Record 1
+Worker 1 locked Record 1
+Worker 2 attempting to lock Record 1
+Worker 1 attempting to lock Record 2
